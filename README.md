@@ -1,5 +1,5 @@
-# Бэкенд дипломной работы
+# Бэкенд дипломной работы movies-explorer-api
 
-api.movies-explorer.alex.nomoredomainswork.ru
+Домен: https://api.movies-explorer.alex.nomoredomainswork.ru
 
-217.22.164.66
+IP: 217.22.164.66
