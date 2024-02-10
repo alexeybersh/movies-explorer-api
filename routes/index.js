@@ -18,6 +18,6 @@ router.use('/users', auth, userRouter);
 
 router.use('/movies', auth, movieRouter);
 
-router.use('*', (req, res, next) => next(errorMessage({ name: 'PageNotFound' })));
+router.use('*', auth, (req, res, next) => next(errorMessage({ name: 'PageNotFound' })));
 
 module.exports = router;
