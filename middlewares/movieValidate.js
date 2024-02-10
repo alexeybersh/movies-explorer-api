@@ -4,7 +4,7 @@ const { URLRegExpression } = require('../utils/constants');
 
 module.exports.movieValidateId = (celebrate({
   params: Joi.object().keys({
-    movieId: Joi.number(),
+    id: Joi.string().required().length(24).alphanum(),
   }),
 }));
 

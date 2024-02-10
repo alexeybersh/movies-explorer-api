@@ -27,7 +27,7 @@ module.exports.getUser = ((req, res, next) => {
   User.findById(req.user._id).orFail()
     .then((user) => res.status(STATUS_OK).send({ user }))
     .catch((error) => {
-      next(errorMessage(error, 'user'));
+      next(errorMessage(error));
     });
 });
 

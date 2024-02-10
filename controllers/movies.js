@@ -6,7 +6,6 @@ const { errorMessage } = require('../utils/errorsMessage');
 const { STATUS_OK, CREATED } = require('../utils/errorsStatus');
 
 module.exports.createMovie = ((req, res, next) => {
-
   owner = req.user._id;
 
   Movie.create({ owner, ...req.body })
@@ -17,22 +16,27 @@ module.exports.createMovie = ((req, res, next) => {
 });
 
 module.exports.getMovies = ((req, res, next) => {
-  Movie.find({})
-    .then((movie) => res.status(STATUS_OK).send({ movie }))
+  Movie.find({ owner: req.user._id })
+    .then((movie) => {
+      if ( movie.length === 0 ) {
+        throw new Error( 'Фильмы не найдены!');
+      } else {
+        res.status(STATUS_OK).send({ movie });
+      }
+    })
     .catch((error) => {
       next(errorMessage(error, 'movie'));
     });
 });
 
 module.exports.deleteMovie = ((req, res, next) => {
-  console.log(req.params.movieId, req.user._id);
-  Movie.findOne({ movieId: 353264573485 }).orFail()
+  Movie.findById(req.params.id).orFail()
     .then((movie) => {
       if (!movie.owner.equals(req.user._id)) {
         throw new Error('Удаление не своего фильма');
       }
-      Movie.deleteOne({ movieId: req.params.movieId }).orFail()
-        .then(() => res.status(STATUS_OK).send({ message: ' Фильм удалён!' }));
+      return Movie.deleteOne({ _id: req.params.id }).orFail()
+        .then(() => res.status(STATUS_OK).send({ message: 'Фильм удалён!' }));
     })
     .catch((error) => {
       next(errorMessage(error));

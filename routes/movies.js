@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 const { Router } = require('express');
 
-const { movieValidateCreate } = require('../middlewares/movieValidate');
+const { movieValidateCreate, movieValidateId } = require('../middlewares/movieValidate');
 
 const {
   createMovie, getMovies, deleteMovie
@@ -13,6 +13,6 @@ movieRouter.get('/', getMovies);
 
 movieRouter.post('/', movieValidateCreate, createMovie);
 
-movieRouter.delete('/:movieId', deleteMovie);
+movieRouter.delete('/:id', movieValidateId, deleteMovie);
 
 module.exports = movieRouter;
