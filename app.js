@@ -1,11 +1,11 @@
 /* eslint-disable no-undef */
 const express = require('express');
 const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
 const cors = require('cors');
 
 const { errors } = require('celebrate');
 const { connect } = require('mongoose');
+const { rateLimit } = require('./utils/rateLimit');
 const router = require('./routes');
 const { errorHandler } = require('./middlewares/error-handler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -18,11 +18,7 @@ app.use(cors());
 
 app.use(requestLogger);
 
-app.use(
-  rateLimit({
-    max: 100,
-  }),
-);
+app.use(rateLimit);
 
 app.use(helmet());
 
