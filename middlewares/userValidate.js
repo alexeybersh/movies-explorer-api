@@ -1,0 +1,23 @@
+/* eslint-disable no-undef */
+const { celebrate, Joi } = require('celebrate');
+
+module.exports.userValidateAuth = (celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().required().email(),
+    password: Joi.string().required().min(3),
+    name: Joi.string().min(2).max(30),
+  }),
+}));
+
+module.exports.userValidateId = (celebrate({
+  params: Joi.object().keys({
+    id: Joi.string().required().length(24).alphanum(),
+  }),
+}));
+
+module.exports.userValidateInfo = (celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().required().email(),
+    name: Joi.string().required().min(2).max(30),
+  }),
+}));
